@@ -1,4 +1,9 @@
 
+using BlogApp.Data;
+using BlogApp.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Blog
 {
     public class Program
@@ -13,6 +18,15 @@ namespace Blog
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //database configuration
+            string connectionstring = builder.Configuration.GetConnectionString("connections");
+            builder.Services.AddDbContext<BlogAppDBcontext>(options => options.UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring)));
+
+            //Identity configuration
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<BlogAppDBcontext>();
 
             var app = builder.Build();
 
