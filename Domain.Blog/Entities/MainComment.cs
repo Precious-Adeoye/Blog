@@ -7,6 +7,7 @@
         public string Content { get; set; }
         public int BlogId{ get; set; }
         public Blog Blog { get; set; }
+        public DateTime CreatedAt { get; set; }
         public List<SubComment> subComments { get; set; } = new List<SubComment>();
     }
 }

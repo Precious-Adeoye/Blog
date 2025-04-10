@@ -10,10 +10,9 @@ namespace Application.Blog.Iservice
 {
     public interface IBlogService
     {
-        Task<List<BlogResponseDTO>> GetAllBlogs();
-        Task<BlogResponseDTO> GetBlogById(int blogId);
         Task<bool> CreateBlog(BlogDTO blogDto, string authorId);
-        Task<bool> UpdateBlog(int blogId, BlogDTO blogDto);
-        Task<bool> DeleteBlog(int blogId);
+        Task<List<BlogResponseDTO>> GetAllBlogs();
+        Task<bool> AddComment(CommentDTO commentDto, string username);
+        Task<bool> ToggleLike(int blogId, string userId);
     }
 }

@@ -1,6 +1,8 @@
 
+using Application.Blog.Iservice;
 using BlogApp.Data;
 using BlogApp.Model;
+using BlogApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +24,9 @@ namespace Blog
             //database configuration
             string connectionstring = builder.Configuration.GetConnectionString("connections");
             builder.Services.AddDbContext<BlogAppDBcontext>(options => options.UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring)));
+
+            //Configure setvices
+            _ = builder.Services.AddScoped<IBlogService, BlogService>();
 
             //Identity configuration
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)

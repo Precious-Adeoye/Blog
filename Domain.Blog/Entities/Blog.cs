@@ -8,6 +8,7 @@
         public string Tags { get; set; }
         public string AuthorID {  get; set; }
         public ApplicationUser Author { get; set; }
+        public DateTime CreatedAt { get; set; }
         public List<MainComment> comments { get; set; } = new List<MainComment>();
         public List<Like> Likes { get; set; } = new List<Like>();
 
