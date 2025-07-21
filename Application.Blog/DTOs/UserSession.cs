@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Application.Blog.DTOs
 {
-    public class UserDto
-    {
-    }
+    public record class UserSession(string? id, string? fullname, string? email,string? role);
+   
 }

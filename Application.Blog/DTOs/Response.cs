@@ -9,6 +9,6 @@ namespace Application.Blog.DTOs
     public class Response
     {
         public record class GeneralResponse(bool status, string message);
-        public record class LogInResponse(bool flag, string message);
+        public record class LogInResponse(bool flag, string token, string message);
     }
 }

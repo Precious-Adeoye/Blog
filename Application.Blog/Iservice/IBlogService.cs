@@ -11,8 +11,9 @@ namespace Application.Blog.Iservice
     public interface IBlogService
     {
         Task<bool> CreateBlog(BlogDTO blogDto, string authorId);
-        Task<List<BlogResponseDTO>> GetAllBlogs();
+        Task<List<BlogResponseDTO>> GetAllBlogs(int page = 1, int pageSize = 10);
         Task<bool> AddComment(CommentDTO commentDto, string username);
         Task<bool> ToggleLike(int blogId, string userId);
+        Task<bool> DeleteBlog(int id, string userId);
     }
 }
