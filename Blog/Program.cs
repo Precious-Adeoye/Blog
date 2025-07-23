@@ -71,7 +71,7 @@ namespace Blog
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireNonAlphanumeric = true;
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
             })
                 .AddEntityFrameworkStores<BlogAppDBcontext>()
                 .AddSignInManager()
@@ -94,7 +94,6 @@ namespace Blog
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
                     ValidAudience = builder.Configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
@@ -147,7 +146,7 @@ namespace Blog
                     {
                         UserName = "Author",
                         Email = defaultEmail,
-                        EmailConfirmed = true,
+                        EmailConfirmed = false,
                         fullname = "Default Author"
                     };
                     var result = await userManager.CreateAsync(authorUser, "Author@123");

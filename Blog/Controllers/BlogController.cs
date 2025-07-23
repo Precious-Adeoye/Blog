@@ -1,11 +1,13 @@
 ﻿using Application.Blog.DTOs;
 using Application.Blog.Iservice;
+using BlogApp.Data;
 using BlogApp.DTOs;
 using BlogApp.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Controllers
 {
@@ -15,11 +17,13 @@ namespace Blog.Controllers
     {
         private readonly IBlogService BlogService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BlogAppDBcontext _context;
 
-        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager)
+        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager, BlogAppDBcontext context)
         {
             BlogService = blogService;
             _userManager = userManager;
+            _context = context;
         }
 
         [HttpPost("Addcomment")]
@@ -72,9 +76,18 @@ namespace Blog.Controllers
             return Ok("Like toggled successfully");
         }
 
-        [HttpDelete("DeleteBlog/{id}")]
-        [Authorize(Roles = "Author")]
+        [HttpGet("SearchBlogs")]
+        public async Task<IActionResult> SearchBlogs([FromQuery] string searchTerm)
+        {
+            var blogs = await _context.Blogs
+                .Where(b => b.Title.Contains(searchTerm))
+                .ToListAsync();
 
+            return Ok(blogs);
+        }
+
+        [Authorize(Roles = "Author")]
+        [HttpDelete("DeleteBlog")]
         public async Task<IActionResult> DeleteBlog(int id)
         {
             var userId = await _userManager.GetUserAsync(User);
